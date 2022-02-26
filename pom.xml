@@ -5,7 +5,7 @@
 
     <groupId>com.ruoyi</groupId>
     <artifactId>dashboard</artifactId>
-    <version>3.8.1</version>·
+    <version>3.8.1</version>
     <packaging>jar</packaging>
 
     <name>Dashboard</name>
