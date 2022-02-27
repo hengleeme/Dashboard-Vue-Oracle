@@ -1,8 +1,8 @@
 package me.henglee.dashboard.pro.freamwork.common.utils;
 
-import com.ruoyi.framework.security.LoginUser;
 import me.henglee.dashboard.pro.freamwork.common.constant.HttpResponseStatus;
 import me.henglee.dashboard.pro.freamwork.common.exception.ServiceException;
+import me.henglee.dashboard.pro.freamwork.security.UumLoginUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * 
  * @author ruoyi
  */
-public class SecurityUtils
+public class UumSecurityUtils
 {
 
     /**
@@ -63,11 +63,11 @@ public class SecurityUtils
     /**
      * 获取用户
      **/
-    public static LoginUser getLoginUser()
+    public static UumLoginUser getLoginUser()
     {
         try
         {
-            return (LoginUser) getAuthentication().getPrincipal();
+            return (UumLoginUser) getAuthentication().getPrincipal();
         }
         catch (Exception e)
         {

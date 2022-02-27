@@ -1,6 +1,8 @@
 package me.henglee.dashboard.pro.uum.user.dao;
 
-import com.ruoyi.project.system.domain.SysUser;
+import me.henglee.dashboard.pro.freamwork.dao.BaseModifyMapper;
+import me.henglee.dashboard.pro.freamwork.dao.BaseQueryMapper;
+import me.henglee.dashboard.pro.uum.user.domain.pojo.UumUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,15 +12,15 @@ import java.util.List;
  * 
  * @author ruoyi
  */
-public interface UumUserMapper
+public interface UumUserMapper extends BaseModifyMapper, BaseQueryMapper
 {
     /**
      * 根据条件分页查询用户列表
      * 
-     * @param sysUser 用户信息
+     * @param uumUser 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUserList(SysUser sysUser);
+    public List<UumUser> selectUserList(UumUser uumUser);
 
     /**
      * 根据条件分页查询已配用户角色列表
@@ -26,7 +28,7 @@ public interface UumUserMapper
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectAllocatedList(SysUser user);
+    public List<UumUser> selectAllocatedList(UumUser user);
 
     /**
      * 根据条件分页查询未分配用户角色列表
@@ -34,7 +36,7 @@ public interface UumUserMapper
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUnallocatedList(SysUser user);
+    public List<UumUser> selectUnallocatedList(UumUser user);
 
     /**
      * 通过用户名查询用户
@@ -42,7 +44,7 @@ public interface UumUserMapper
      * @param userName 用户名
      * @return 用户对象信息
      */
-    public SysUser selectUserByUserName(String userName);
+    public UumUser selectUserByUserName(String userName);
 
     /**
      * 通过用户ID查询用户
@@ -50,7 +52,7 @@ public interface UumUserMapper
      * @param userId 用户ID
      * @return 用户对象信息
      */
-    public SysUser selectUserById(Long userId);
+    public UumUser selectUserById(Long userId);
 
     /**
      * 新增用户信息
@@ -58,7 +60,7 @@ public interface UumUserMapper
      * @param user 用户信息
      * @return 结果
      */
-    public int insertUser(SysUser user);
+    public int insertUser(UumUser user);
 
     /**
      * 修改用户信息
@@ -66,7 +68,7 @@ public interface UumUserMapper
      * @param user 用户信息
      * @return 结果
      */
-    public int updateUser(SysUser user);
+    public int updateUser(UumUser user);
 
     /**
      * 修改用户头像
@@ -116,7 +118,7 @@ public interface UumUserMapper
      * @param phonenumber 手机号码
      * @return 结果
      */
-    public SysUser checkPhoneUnique(String phonenumber);
+    public UumUser checkPhoneUnique(String phonenumber);
 
     /**
      * 校验email是否唯一
@@ -124,5 +126,5 @@ public interface UumUserMapper
      * @param email 用户邮箱
      * @return 结果
      */
-    public SysUser checkEmailUnique(String email);
+    public UumUser checkEmailUnique(String email);
 }

@@ -5,14 +5,14 @@ import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.constant.HttpStatus;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.PageUtils;
-import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.sql.SqlUtil;
-import com.ruoyi.framework.security.LoginUser;
+import me.henglee.dashboard.pro.freamwork.common.utils.UumSecurityUtils;
 import me.henglee.dashboard.pro.freamwork.domain.AjaxResult;
 import me.henglee.dashboard.pro.freamwork.page.PageDomain;
 import me.henglee.dashboard.pro.freamwork.page.TableDataInfo;
 import me.henglee.dashboard.pro.freamwork.page.TableSupport;
+import me.henglee.dashboard.pro.freamwork.security.UumLoginUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -140,9 +140,9 @@ public class BaseController
     /**
      * 获取用户缓存信息
      */
-    public LoginUser getLoginUser()
+    public UumLoginUser getUumLoginUser()
     {
-        return SecurityUtils.getLoginUser();
+        return UumSecurityUtils.getLoginUser();
     }
 
     /**
@@ -150,7 +150,7 @@ public class BaseController
      */
     public Long getUserId()
     {
-        return getLoginUser().getUserId();
+        return getUumLoginUser().getUserId();
     }
 
     /**
@@ -158,7 +158,7 @@ public class BaseController
      */
     public Long getDeptId()
     {
-        return getLoginUser().getDeptId();
+        return getUumLoginUser().getDeptId();
     }
 
     /**
@@ -166,6 +166,6 @@ public class BaseController
      */
     public String getUsername()
     {
-        return getLoginUser().getUsername();
+        return getUumLoginUser().getUsername();
     }
 }

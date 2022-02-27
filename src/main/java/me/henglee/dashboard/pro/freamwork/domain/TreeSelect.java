@@ -1,8 +1,8 @@
 package me.henglee.dashboard.pro.freamwork.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.ruoyi.project.system.domain.SysDept;
-import com.ruoyi.project.system.domain.SysMenu;
+import me.henglee.dashboard.pro.uum.dept.domain.pojo.UumDept;
+import me.henglee.dashboard.pro.uum.menu.domain.pojo.UumMenu;
 
 import java.io.Serializable;
 import java.util.List;
@@ -32,14 +32,14 @@ public class TreeSelect implements Serializable
 
     }
 
-    public TreeSelect(SysDept dept)
+    public TreeSelect(UumDept dept)
     {
         this.id = dept.getDeptId();
         this.label = dept.getDeptName();
         this.children = dept.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
-    public TreeSelect(SysMenu menu)
+    public TreeSelect(UumMenu menu)
     {
         this.id = menu.getMenuId();
         this.label = menu.getMenuName();

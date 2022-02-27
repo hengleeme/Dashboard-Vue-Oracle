@@ -2,7 +2,7 @@ package me.henglee.dashboard.pro.freamwork.common.utils;
 
 import com.ruoyi.framework.redis.RedisCache;
 import com.ruoyi.project.system.domain.SysDictData;
-import me.henglee.dashboard.pro.freamwork.common.constant.Constants;
+import me.henglee.dashboard.pro.freamwork.common.constant.DashboardConstants;
 import me.henglee.dashboard.pro.freamwork.common.utils.spring.SpringUtils;
 
 import java.util.Collection;
@@ -166,7 +166,7 @@ public class DictUtils
      */
     public static void clearDictCache()
     {
-        Collection<String> keys = SpringUtils.getBean(RedisCache.class).keys(Constants.SYS_DICT_KEY + "*");
+        Collection<String> keys = SpringUtils.getBean(RedisCache.class).keys(DashboardConstants.SYS_DICT_KEY + "*");
         SpringUtils.getBean(RedisCache.class).deleteObject(keys);
     }
 
@@ -178,6 +178,6 @@ public class DictUtils
      */
     public static String getCacheKey(String configKey)
     {
-        return Constants.SYS_DICT_KEY + configKey;
+        return DashboardConstants.SYS_DICT_KEY + configKey;
     }
 }

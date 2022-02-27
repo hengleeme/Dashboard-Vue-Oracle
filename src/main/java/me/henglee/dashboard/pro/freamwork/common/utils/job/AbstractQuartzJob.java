@@ -3,7 +3,7 @@ package me.henglee.dashboard.pro.freamwork.common.utils.job;
 import com.ruoyi.project.monitor.domain.SysJob;
 import com.ruoyi.project.monitor.domain.SysJobLog;
 import com.ruoyi.project.monitor.service.ISysJobLogService;
-import me.henglee.dashboard.pro.freamwork.common.constant.Constants;
+import me.henglee.dashboard.pro.freamwork.common.constant.DashboardConstants;
 import me.henglee.dashboard.pro.freamwork.common.constant.ScheduleConstants;
 import me.henglee.dashboard.pro.freamwork.common.utils.ExceptionUtil;
 import me.henglee.dashboard.pro.freamwork.common.utils.StringUtils;
@@ -84,13 +84,13 @@ public abstract class AbstractQuartzJob implements Job
         sysJobLog.setJobMessage(sysJobLog.getJobName() + " 总共耗时：" + runMs + "毫秒");
         if (e != null)
         {
-            sysJobLog.setStatus(Constants.FAIL);
+            sysJobLog.setStatus(DashboardConstants.FAIL);
             String errorMsg = StringUtils.substring(ExceptionUtil.getExceptionMessage(e), 0, 2000);
             sysJobLog.setExceptionInfo(errorMsg);
         }
         else
         {
-            sysJobLog.setStatus(Constants.SUCCESS);
+            sysJobLog.setStatus(DashboardConstants.SUCCESS);
         }
 
         // 写入数据库当中

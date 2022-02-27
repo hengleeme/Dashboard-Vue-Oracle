@@ -2,7 +2,7 @@ package me.henglee.dashboard.pro.freamwork.common.utils.ip;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ruoyi.framework.config.RuoYiConfig;
-import me.henglee.dashboard.pro.freamwork.common.constant.Constants;
+import me.henglee.dashboard.pro.freamwork.common.constant.DashboardConstants;
 import me.henglee.dashboard.pro.freamwork.common.utils.StringUtils;
 import me.henglee.dashboard.pro.freamwork.common.utils.http.HttpUtils;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class AddressUtils
         {
             try
             {
-                String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", Constants.GBK);
+                String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", DashboardConstants.GBK);
                 if (StringUtils.isEmpty(rspStr))
                 {
                     log.error("获取地理位置异常 {}", ip);

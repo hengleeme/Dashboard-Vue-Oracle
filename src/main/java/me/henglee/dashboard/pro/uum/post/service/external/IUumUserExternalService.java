@@ -1,6 +1,7 @@
-package me.henglee.dashboard.pro.uum.user.service.external;
+package me.henglee.dashboard.pro.uum.post.service.external;
 
 import com.ruoyi.project.system.domain.SysUser;
+import me.henglee.dashboard.pro.freamwork.service.external.IBaseExternalService;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * 
  * @author ruoyi
  */
-public interface IUserExternalService
+public interface IUumUserExternalService extends IBaseExternalService
 {
     /**
      * 根据条件分页查询用户列表

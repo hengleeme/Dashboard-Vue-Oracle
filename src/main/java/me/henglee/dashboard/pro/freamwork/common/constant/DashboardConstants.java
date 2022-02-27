@@ -7,7 +7,7 @@ import io.jsonwebtoken.Claims;
  * 
  * @author ruoyi
  */
-public class Constants
+public class DashboardConstants
 {
     /**
      * UTF-8 字符集

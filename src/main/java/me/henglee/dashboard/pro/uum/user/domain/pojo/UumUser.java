@@ -7,9 +7,9 @@ import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel.ColumnType;
 import com.ruoyi.framework.aspectj.lang.annotation.Excel.Type;
 import com.ruoyi.framework.aspectj.lang.annotation.Excels;
-import com.ruoyi.framework.web.domain.BaseEntity;
-import com.ruoyi.project.system.domain.SysDept;
-import com.ruoyi.project.system.domain.SysRole;
+import me.henglee.dashboard.pro.freamwork.domain.BasePojo;
+import me.henglee.dashboard.pro.uum.dept.domain.pojo.UumDept;
+import me.henglee.dashboard.pro.uum.role.domain.pojo.UumRole;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -24,7 +24,7 @@ import java.util.List;
  * 
  * @author Adny.Ma
  */
-public class UumUser extends BaseEntity
+public class UumUser extends BasePojo
 {
     private static final long serialVersionUID = 1L;
 
@@ -82,10 +82,10 @@ public class UumUser extends BaseEntity
         @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
         @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
     })
-    private SysDept dept;
+    private UumDept dept;
 
     /** 角色对象 */
-    private List<SysRole> roles;
+    private List<UumRole> roles;
 
     /** 角色组 */
     private Long[] roleIds;
@@ -256,22 +256,22 @@ public class UumUser extends BaseEntity
         this.loginDate = loginDate;
     }
 
-    public SysDept getDept()
+    public UumDept getDept()
     {
         return dept;
     }
 
-    public void setDept(SysDept dept)
+    public void setDept(UumDept dept)
     {
         this.dept = dept;
     }
 
-    public List<SysRole> getRoles()
+    public List<UumRole> getRoles()
     {
         return roles;
     }
 
-    public void setRoles(List<SysRole> roles)
+    public void setRoles(List<UumRole> roles)
     {
         this.roles = roles;
     }

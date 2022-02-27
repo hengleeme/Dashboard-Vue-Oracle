@@ -1,22 +1,21 @@
 package me.henglee.dashboard.pro.uum.user.web.controller;
 
-import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
-import com.ruoyi.framework.web.controller.BaseController;
-import com.ruoyi.framework.web.domain.AjaxResult;
-import com.ruoyi.framework.web.page.TableDataInfo;
-import com.ruoyi.project.system.domain.SysRole;
-import com.ruoyi.project.system.domain.SysUser;
-import com.ruoyi.project.system.service.ISysPostService;
-import com.ruoyi.project.system.service.ISysRoleService;
-import com.ruoyi.project.system.service.ISysUserService;
 import me.henglee.dashboard.pro.freamwork.common.constant.UumUserConstants;
+import me.henglee.dashboard.pro.freamwork.common.utils.StringUtils;
+import me.henglee.dashboard.pro.freamwork.common.utils.UumSecurityUtils;
+import me.henglee.dashboard.pro.freamwork.common.utils.poi.ExcelUtil;
+import me.henglee.dashboard.pro.freamwork.controller.BaseController;
+import me.henglee.dashboard.pro.freamwork.domain.AjaxResult;
+import me.henglee.dashboard.pro.freamwork.page.TableDataInfo;
+import me.henglee.dashboard.pro.uum.post.service.internal.IUumPostService;
+import me.henglee.dashboard.pro.uum.role.domain.pojo.UumRole;
+import me.henglee.dashboard.pro.uum.role.service.internal.IUumRoleService;
+import me.henglee.dashboard.pro.uum.user.domain.pojo.UumUser;
+import me.henglee.dashboard.pro.uum.user.service.internal.IUumUserService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,43 +34,43 @@ import java.util.stream.Collectors;
 public class UumUserController extends BaseController
 {
     @Autowired
-    private ISysUserService userService;
+    private IUumUserService userService;
 
     @Autowired
-    private ISysRoleService roleService;
+    private IUumRoleService roleService;
 
     @Autowired
-    private ISysPostService postService;
+    private IUumPostService postService;
 
     /**
      * 获取用户列表
      */
-    @PreAuthorize("@ss.hasPermi('uum:user:list')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:list')")
     @GetMapping("/list")
-    public TableDataInfo list(SysUser user)
+    public TableDataInfo list(UumUser user)
     {
         startPage();
-        List<SysUser> list = userService.selectUserList(user);
+        List<UumUser> list = userService.selectUserList(user);
         return getDataTable(list);
     }
 
-    @Log(title = "用户管理", businessType = BusinessType.EXPORT)
-    @PreAuthorize("@ss.hasPermi('uum:user:export')")
+    @Log (title = "用户管理", businessType = BusinessType.EXPORT)
+   // @PreAuthorize("@ss.hasPermi('uum:user:export')")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysUser user)
+    public void export(HttpServletResponse response, UumUser user)
     {
-        List<SysUser> list = userService.selectUserList(user);
-        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+        List<UumUser> list = userService.selectUserList(user);
+        ExcelUtil<UumUser> util = new ExcelUtil<UumUser>(UumUser.class);
         util.exportExcel(response, list, "用户数据");
     }
 
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
-    @PreAuthorize("@ss.hasPermi('uum:user:import')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:import')")
     @PostMapping("/importData")
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
     {
-        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
-        List<SysUser> userList = util.importExcel(file.getInputStream());
+        ExcelUtil<UumUser> util = new ExcelUtil<UumUser>(UumUser.class);
+        List<UumUser> userList = util.importExcel(file.getInputStream());
         String operName = getUsername();
         String message = userService.importUser(userList, updateSupport, operName);
         return AjaxResult.success(message);
@@ -80,28 +79,28 @@ public class UumUserController extends BaseController
     @PostMapping("/importTemplate")
     public void importTemplate(HttpServletResponse response)
     {
-        ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
+        ExcelUtil<UumUser> util = new ExcelUtil<UumUser>(UumUser.class);
         util.importTemplateExcel(response, "用户数据");
     }
 
     /**
      * 根据用户编号获取详细信息
      */
-    @PreAuthorize("@ss.hasPermi('uum:user:query')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:query')")
     @GetMapping(value = { "/", "/{userId}" })
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId)
     {
         userService.checkUserDataScope(userId);
         AjaxResult ajax = AjaxResult.success();
-        List<SysRole> roles = roleService.selectRoleAll();
-        ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        List<UumRole> roles = roleService.selectRoleAll();
+        ajax.put("roles", UumUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         ajax.put("posts", postService.selectPostAll());
         if (StringUtils.isNotNull(userId))
         {
-            SysUser sysUser = userService.selectUserById(userId);
+            UumUser sysUser = userService.selectUserById(userId);
             ajax.put(AjaxResult.DATA_TAG, sysUser);
             ajax.put("postIds", postService.selectPostListByUserId(userId));
-            ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
+            ajax.put("roleIds", sysUser.getRoles().stream().map(UumRole::getRoleId).collect(Collectors.toList()));
         }
         return ajax;
     }
@@ -109,10 +108,10 @@ public class UumUserController extends BaseController
     /**
      * 新增用户
      */
-    @PreAuthorize("@ss.hasPermi('uum:user:add')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:add')")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysUser user)
+    public AjaxResult add(@Validated @RequestBody UumUser user)
     {
         if (UumUserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(user.getUserName())))
         {
@@ -129,17 +128,17 @@ public class UumUserController extends BaseController
             return AjaxResult.error("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         user.setCreateBy(getUsername());
-        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
+        user.setPassword(UumSecurityUtils.encryptPassword(user.getPassword()));
         return toAjax(userService.insertUser(user));
     }
 
     /**
      * 修改用户
      */
-    @PreAuthorize("@ss.hasPermi('uum:user:edit')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:edit')")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysUser user)
+    public AjaxResult edit(@Validated @RequestBody UumUser user)
     {
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
@@ -160,7 +159,7 @@ public class UumUserController extends BaseController
     /**
      * 删除用户
      */
-    @PreAuthorize("@ss.hasPermi('uum:user:remove')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:remove')")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{userIds}")
     public AjaxResult remove(@PathVariable Long[] userIds)
@@ -175,14 +174,14 @@ public class UumUserController extends BaseController
     /**
      * 重置密码
      */
-    @PreAuthorize("@ss.hasPermi('uum:user:resetPwd')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:resetPwd')")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwd")
-    public AjaxResult resetPwd(@RequestBody SysUser user)
+    public AjaxResult resetPwd(@RequestBody UumUser user)
     {
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
-        user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
+        user.setPassword(UumSecurityUtils.encryptPassword(user.getPassword()));
         user.setUpdateBy(getUsername());
         return toAjax(userService.resetPwd(user));
     }
@@ -190,10 +189,10 @@ public class UumUserController extends BaseController
     /**
      * 状态修改
      */
-    @PreAuthorize("@ss.hasPermi('uum:user:edit')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:edit')")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysUser user)
+    public AjaxResult changeStatus(@RequestBody UumUser user)
     {
         userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
@@ -204,22 +203,22 @@ public class UumUserController extends BaseController
     /**
      * 根据用户编号获取授权角色
      */
-    @PreAuthorize("@ss.hasPermi('uum:user:query')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:query')")
     @GetMapping("/authRole/{userId}")
     public AjaxResult authRole(@PathVariable("userId") Long userId)
     {
         AjaxResult ajax = AjaxResult.success();
-        SysUser user = userService.selectUserById(userId);
-        List<SysRole> roles = roleService.selectRolesByUserId(userId);
+        UumUser user = userService.selectUserById(userId);
+        List<UumRole> roles = roleService.selectRolesByUserId(userId);
         ajax.put("user", user);
-        ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
+        ajax.put("roles", UumUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
         return ajax;
     }
 
     /**
      * 用户授权角色
      */
-    @PreAuthorize("@ss.hasPermi('uum:user:edit')")
+   // @PreAuthorize("@ss.hasPermi('uum:user:edit')")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PutMapping("/authRole")
     public AjaxResult insertAuthRole(Long userId, Long[] roleIds)

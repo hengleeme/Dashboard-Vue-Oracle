@@ -1,7 +1,7 @@
 package me.henglee.dashboard.pro.freamwork.common.utils.job;
 
 import com.ruoyi.project.monitor.domain.SysJob;
-import me.henglee.dashboard.pro.freamwork.common.constant.Constants;
+import me.henglee.dashboard.pro.freamwork.common.constant.DashboardConstants;
 import me.henglee.dashboard.pro.freamwork.common.constant.ScheduleConstants;
 import me.henglee.dashboard.pro.freamwork.common.exception.job.TaskException;
 import me.henglee.dashboard.pro.freamwork.common.utils.StringUtils;
@@ -115,7 +115,7 @@ public class ScheduleUtils
         int count = StringUtils.countMatches(packageName, ".");
         if (count > 1)
         {
-            if (!StringUtils.containsAnyIgnoreCase(invokeTarget, Constants.JOB_WHITELIST_STR))
+            if (!StringUtils.containsAnyIgnoreCase(invokeTarget, DashboardConstants.JOB_WHITELIST_STR))
             {
                 return false;
             }

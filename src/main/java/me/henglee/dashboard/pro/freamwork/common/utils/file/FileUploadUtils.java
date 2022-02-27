@@ -1,7 +1,7 @@
 package me.henglee.dashboard.pro.freamwork.common.utils.file;
 
 import com.ruoyi.framework.config.RuoYiConfig;
-import me.henglee.dashboard.pro.freamwork.common.constant.Constants;
+import me.henglee.dashboard.pro.freamwork.common.constant.DashboardConstants;
 import me.henglee.dashboard.pro.freamwork.common.exception.file.FileNameLengthLimitExceededException;
 import me.henglee.dashboard.pro.freamwork.common.exception.file.FileSizeLimitExceededException;
 import me.henglee.dashboard.pro.freamwork.common.exception.file.InvalidExtensionException;
@@ -142,7 +142,7 @@ public class FileUploadUtils
     {
         int dirLastIndex = RuoYiConfig.getProfile().length() + 1;
         String currentDir = StringUtils.substring(uploadDir, dirLastIndex);
-        return Constants.RESOURCE_PREFIX + "/" + currentDir + "/" + fileName;
+        return DashboardConstants.RESOURCE_PREFIX + "/" + currentDir + "/" + fileName;
     }
 
     /**

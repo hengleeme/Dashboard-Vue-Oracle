@@ -1,6 +1,6 @@
 package me.henglee.dashboard.pro.freamwork.common.utils.http;
 
-import me.henglee.dashboard.pro.freamwork.common.constant.Constants;
+import me.henglee.dashboard.pro.freamwork.common.constant.DashboardConstants;
 import me.henglee.dashboard.pro.freamwork.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class HttpUtils
      */
     public static String sendGet(String url, String param)
     {
-        return sendGet(url, param, Constants.UTF8);
+        return sendGet(url, param, DashboardConstants.UTF8);
     }
 
     /**

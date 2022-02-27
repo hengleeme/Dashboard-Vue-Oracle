@@ -1,15 +1,16 @@
-package me.henglee.dashboard.pro.uum.user.service.internal;
+package me.henglee.dashboard.pro.uum.role.service.external;
 
 import com.ruoyi.project.system.domain.SysUser;
+import me.henglee.dashboard.pro.freamwork.service.external.IBaseExternalService;
 
 import java.util.List;
 
 /**
- * 用户 业务层
+ * 用户对外接口 业务层
  * 
  * @author ruoyi
  */
-public interface IUserService
+public interface IUumUserExternalService extends IBaseExternalService
 {
     /**
      * 根据条件分页查询用户列表

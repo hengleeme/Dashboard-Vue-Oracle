@@ -1,6 +1,6 @@
 package me.henglee.dashboard.pro.freamwork.common.utils;
 
-import me.henglee.dashboard.pro.freamwork.common.constant.Constants;
+import me.henglee.dashboard.pro.freamwork.common.constant.DashboardConstants;
 import me.henglee.dashboard.pro.freamwork.common.core.text.StrFormatter;
 import org.springframework.util.AntPathMatcher;
 
@@ -266,7 +266,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
      */
     public static boolean ishttp(String link)
     {
-        return StringUtils.startsWithAny(link, Constants.HTTP, Constants.HTTPS);
+        return StringUtils.startsWithAny(link, DashboardConstants.HTTP, DashboardConstants.HTTPS);
     }
 
     /**
